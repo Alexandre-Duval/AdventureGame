@@ -44,9 +44,9 @@ def menu():
 
 
 def move():
-    input("where to you want to move?")
-    if direction  in ["north", "west", "east", "south"]:
-        player.set_position(rooms[player.get_position()][direction.capitalize().split(" ")])
+    direction = input("where to you want to move?")
+    if direction in ["north", "west", "east", "south"]:
+        player.set_position(rooms[player.get_position()][direction.capitalize()])
         print( f"you are in room {player.get_position()}\n{description[player.get_position()]}")
     else:
         print("Invalid Input. Please enter 'north, west, east or south'.")
