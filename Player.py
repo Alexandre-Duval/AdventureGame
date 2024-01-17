@@ -1,6 +1,6 @@
 class Player:
-    def __init__(self, hp: int, position: str) -> None:
-        self.hp = hp
+
+    def __init__(self, position: str) -> None:
         self.position = position
 
     def get_position(self):
