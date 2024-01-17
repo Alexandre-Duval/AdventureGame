@@ -10,7 +10,7 @@ inventory = []
 description = {
     "Entrance": "Description: You are in the house entrance. There is a King Charles III painting, a (stolen) Banksy, a selfie stick, and doors to the north and east",
     "Garage": "Description: you are in a garage. Theres a new Tesla, a Benz and a Russian Tank. Also a door to the west and north.",
-    "Halway": "Description: You are in a hallway. There are doors to the north, east, west and south.",
+    "Hallway": "Description: You are in a hallway. There are doors to the north, east, west and south.",
     "Garden": "Description: You are in a Garden. There are roses fertilizer and a corpse, and a door to the west and south,",
     "Master Bedroom": "Description: You are in a bedroom. There is a bed, a dresser and a key. There's a door to the south and a door to the west.",
     "Bathroom": "Description: You are in a bathroom. There is a sink, a toilet and a diamond ring, and a door to the south and east.",
@@ -18,13 +18,13 @@ description = {
 }
 
 rooms = {
-    "Entrance": {"east": "Garage", "north": "Halway"},
+    "Entrance": {"east": "Garage", "north": "Hallway"},
     "Garage": {"west": "Entrance", "north": "Garden"},
-    "Halway": {"north": "Master Bedroom", "south": "Entrance", "east": "Garden", "west": "Kitchen"},
-    "Garden": {"west": "Halway", "south": "Garage"},
-    "Master Bedroom": {"south": "Halway", "west": "Bathroom"},
+    "Hallway": {"north": "Master Bedroom", "south": "Entrance", "east": "Garden", "west": "Kitchen"},
+    "Garden": {"west": "Hallway", "south": "Garage"},
+    "Master Bedroom": {"south": "Hallway", "west": "Bathroom"},
     "Bathroom": {"south": "Kitchen", "east": "Master Bedroom"},
-    "Kitchen": {"east": "Halway", "north": "Bathroom"}
+    "Kitchen": {"east": "Hallway", "north": "Bathroom"}
 }
 
 options = ["Move to a different room", "Find item", "quit"]
@@ -41,7 +41,7 @@ def menu():
     main_menu = input("Welcome to the dungeon!\n\nMap or no map? (y/n)")
     while True:
         if main_menu == "y":
-            img = Image.open('map.PNG')
+            img = Image.open('map2.PNG')
             img.show()
             break
 
@@ -59,7 +59,7 @@ def prompt():
     print(f"you are in room {player.get_position()}\n{description[player.get_position()]}\n")
     print(f"Inventory: {inventory}")
     print("-------------------------")
-    if len(inventory) == 4 and player.get_position() == "Lime":
+    if len(inventory) == 4 and player.get_position() == "Master Bedroom":
         options.append("Open door")
 
     for i in range(len(options)):
@@ -76,7 +76,7 @@ def game_loop():
     item_location = {
     "Entrance": "",
     "Garage": items[0], 
-    "Halway": items[1],
+    "Hallway": items[1],
     "Garden": items[2],
     "Master Bedroom": items[3],
     "Bathroom": items[4],
@@ -84,7 +84,7 @@ def game_loop():
     }
 
     while True:
-
+        print(item_location)
         prompt()
         next_move = (input("Next move: "))
 
@@ -99,7 +99,7 @@ def game_loop():
 
                     try: 
                         player.set_position(rooms[player.get_position()][direction])
-                        print(f"you are in room {player.get_position()} \n{description[player.get_position()]}")
+                        #print(f"you are in room {player.get_position()} \n{description[player.get_position()]}")
 
                     except KeyError:
                         print("Can't move in that direction.")
