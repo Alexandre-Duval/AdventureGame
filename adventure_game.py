@@ -8,13 +8,13 @@ items = ["diamond ring", "key", "knife", "trap", "russian tank", "rose"]
 inventory = []
 
 description = {
-    "Entrance": "Description: You are in the house entrance. There is a King Charles III painting, a (stolen) Banksy, a selfie stick, and doors to the north and east",
-    "Garage": "Description: you are in a garage. Theres a new Tesla, a Benz and a Russian Tank. Also a door to the west and north.",
-    "Hallway": "Description: You are in a hallway. There are doors to the north, east, west and south.",
-    "Garden": "Description: You are in a Garden. There are roses fertilizer and a corpse, and a door to the west and south,",
-    "Master Bedroom": "Description: You are in a bedroom. There is a bed, a dresser and a key. There's a door to the south and a door to the west.",
-    "Bathroom": "Description: You are in a bathroom. There is a sink, a toilet and a diamond ring, and a door to the south and east.",
-    "Kitchen":"Description: You are in the kitchen there is a knife, a ham leg and fish and chips. There is a door to the east and to the north."
+    "Entrance": "You are in the house entrance. There is a King Charles III painting, a (stolen) Banksy, a selfie stick, and doors to the north and east",
+    "Garage": "You are in a garage. Theres a new Tesla, a Benz and a Russian Tank. Also a door to the west and north.",
+    "Hallway": "You are in a hallway. There are doors to the north, east, west and south.",
+    "Garden": "You are in a Garden. There are roses fertilizer and a corpse, and a door to the west and south,",
+    "Master Bedroom": "You are in a bedroom. There is a bed, a dresser and a key. There's a door to the south and a door to the west.",
+    "Bathroom": "You are in a bathroom. There is a sink, a toilet and a diamond ring, and a door to the south and east.",
+    "Kitchen":"You are in the kitchen there is a knife, a ham leg and fish and chips. There is a door to the east and to the north."
 }
 
 rooms = {
@@ -52,9 +52,13 @@ def clear():
 
 
 # first menu player sees when starting the game. Gives option to show map or not
-def menu():
-    main_menu = input("Welcome to the dungeon!\n\nMap or no map? (y/n)")
+def map():
+    print("Welcome to the Mansion!\n")
+    print("Rules - To win the game you need to pick up 4 or more items and reach the 'Master Bedroom' to win the game.\n      - Be careful to not step on any traps or its game over!")
+    main_menu = input("\nMap or no map? (y/n): ")
+
     while True:
+
         if main_menu == "y":
             img = Image.open('map2.PNG')
             img.show()
@@ -71,7 +75,7 @@ def menu():
 
 # displays the options the player has after every move
 def prompt():
-    print(f"you are in room {player.get_position()}\n{description[player.get_position()]}\n")
+    print(f"Location: {player.get_position()}\n{description[player.get_position()]}\n")
     print(f"Inventory: {inventory}")
     print("-------------------------")
     if len(inventory) == 4 and player.get_position() == "Master Bedroom":
@@ -91,7 +95,6 @@ def prompt():
 def game_loop():
 
     # Randomizes item locations except for the item in the first room so the player doesn't get a trap instantly
-    
     random.shuffle(items)
     item_location = {
     "Entrance": "",
@@ -106,11 +109,11 @@ def game_loop():
 
     while True:
 
-        print(item_location)
         prompt()
-        next_move = (input("Next move: "))
+        next_move = (input("Next move (Type 1, 2 or 3): "))
 
         match(next_move):
+
             # movement of player in specific direction
             case "1":
 
@@ -172,7 +175,7 @@ def game_loop():
 
 def main():
     clear()
-    menu()
+    map()
     game_loop()
 
 if __name__ == "__main__":
