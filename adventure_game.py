@@ -1,7 +1,7 @@
 import random
 import os
-from Player import Player
 from PIL import Image
+
 
 items = ["diamond ring", "key", "knife", "trap", "russian tank", "rose"]
 
@@ -27,15 +27,30 @@ rooms = {
     "Kitchen": {"east": "Hallway", "north": "Bathroom"}
 }
 
-options = ["Move to a different room", "Find item", "quit"]
+options = ["Move to a different room", "Find item", "quit", "Open door"]
 
-#Initialize player object
+
+class Player:
+
+    def __init__(self, position: str):
+        self.position = position
+
+    def get_position(self):
+        return self.position
+
+    def set_position(self, position):
+        self.position = position
+
+
+#Instantiate player object
 player = Player("Entrance")
+
 
 # clears the terminal to make game more readable
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
-    
+
+
 # first menu player sees when starting the game. Gives option to show map or not
 def menu():
     main_menu = input("Welcome to the dungeon!\n\nMap or no map? (y/n)")
@@ -60,18 +75,23 @@ def prompt():
     print(f"Inventory: {inventory}")
     print("-------------------------")
     if len(inventory) == 4 and player.get_position() == "Master Bedroom":
-        options.append("Open door")
+        for i in range(len(options)):
+            print(f"{i + 1}. {options[i]}")
+        print("-------------------------")
+        print("")
 
-    for i in range(len(options)):
-        print(f"{i + 1}. {options[i]}")
-    print("-------------------------")
-    print("")
+    else:
+        for i in range(len(options) - 1):
+            print(f"{i + 1}. {options[i]}")
+        print("-------------------------")
+        print("")
 
 
 # main game loop
 def game_loop():
 
     # Randomizes item locations except for the item in the first room so the player doesn't get a trap instantly
+    
     random.shuffle(items)
     item_location = {
     "Entrance": "",
@@ -83,7 +103,9 @@ def game_loop():
     "Kitchen": items[5]
     }
 
+
     while True:
+
         print(item_location)
         prompt()
         next_move = (input("Next move: "))
@@ -91,21 +113,28 @@ def game_loop():
         match(next_move):
             # movement of player in specific direction
             case "1":
-                direction = input("where to you want to move? (Type: north, west, east or south)\n")
 
-                clear()
+                while True:
 
-                if direction in ["north", "west", "east", "south"]:
+                    direction = input("where to you want to move? (Type: north, west, east or south)\n")
 
-                    try: 
-                        player.set_position(rooms[player.get_position()][direction])
-                        #print(f"you are in room {player.get_position()} \n{description[player.get_position()]}")
+                    if direction in ["north", "west", "east", "south"]:
 
-                    except KeyError:
-                        print("Can't move in that direction.")
+                        try: 
+                            player.set_position(rooms[player.get_position()][direction])
+                            break
+                            #print(f"you are in room {player.get_position()} \n{description[player.get_position()]}")
 
-                else:
-                    print("Invalid Input. Please enter 'north, west, east or south'.")
+                        except KeyError:
+                            print("Can't move in that direction.")
+                    
+                    elif direction == "back":
+                        break
+
+                    else:
+                        clear()
+                        print("Invalid Input. Please enter 'north, west, east or south'.\n")
+                        continue
 
             # Picking up item
             case "2":
