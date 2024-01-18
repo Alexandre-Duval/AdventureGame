@@ -78,7 +78,7 @@ def prompt():
     print(f"Location: {player.get_position()}\n{description[player.get_position()]}\n")
     print(f"Inventory: {inventory}")
     print("-------------------------")
-    if len(inventory) == 4 and player.get_position() == "Master Bedroom":
+    if len(inventory) >= 4 and player.get_position() == "Master Bedroom":
         for i in range(len(options)):
             print(f"{i + 1}. {options[i]}")
         print("-------------------------")
