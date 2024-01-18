@@ -122,6 +122,7 @@ def game_loop():
                     direction = input("where to you want to move? (Type: north, west, east or south)\n")
 
                     if direction in ["north", "west", "east", "south"]:
+                        clear()
 
                         try: 
                             player.set_position(rooms[player.get_position()][direction])
