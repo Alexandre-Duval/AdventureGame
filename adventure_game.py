@@ -29,7 +29,7 @@ rooms = {
 
 options = ["Move to a different room", "Find item", "quit", "Open door"]
 
-
+# class for player 
 class Player:
 
     def __init__(self, position: str):
@@ -172,7 +172,7 @@ def game_loop():
                 print("Please enter a valid input.\n")
                 continue
 
-
+# main game funtion
 def main():
     clear()
     map()
