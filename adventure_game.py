@@ -127,7 +127,6 @@ def game_loop():
                         try: 
                             player.set_position(rooms[player.get_position()][direction])
                             break
-                            #print(f"you are in room {player.get_position()} \n{description[player.get_position()]}")
 
                         except KeyError:
                             print("Can't move in that direction.")
